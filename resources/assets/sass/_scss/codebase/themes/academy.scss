@@ -1,0 +1,46 @@
+//
+// Color Theme - Corporate
+// --------------------------------------------------
+
+// Bootstrap functions (original)
+@import '../../bootstrap/functions';
+
+// Codebase variables and Bootstrap variable overrides
+@import '../variables';
+@import '../variables-themes';
+@import '../variables-bootstrap';
+
+// Bootstrap variables and mixins (original)
+@import '../../bootstrap/variables';
+@import '../../bootstrap/mixins';
+
+// Codebase mixins and Bootstrap overrides
+@import '../mixins';
+
+// Generate color theme
+@include color-theme($theme-academy-primary,
+    $theme-academy-light,
+    $theme-academy-lighter,
+    $theme-academy-dark,
+    $theme-academy-darker,
+    $theme-academy-body-bg,
+    $theme-academy-body-bg-dark,
+    $theme-academy-body-bg-light,
+    $theme-academy-body-color,
+    $theme-academy-body-color-dark,
+    $theme-academy-body-color-light,
+    $theme-academy-link-color,
+    $theme-academy-link-hover-color,
+    $theme-academy-headings-color,
+    $theme-academy-headings-small-color,
+    $theme-academy-header-bg,
+    $theme-academy-header-inverse-bg,
+    $theme-academy-sidebar-bg,
+    $theme-academy-sidebar-inverse-bg,
+    $theme-academy-side-overlay-bg,
+    $theme-academy-input-color,
+    $theme-academy-input-focus-color,
+    $theme-academy-input-border-color,
+    $theme-academy-input-focus-border-color,
+    $theme-academy-input-bg,
+    $theme-academy-input-focus-bg);
