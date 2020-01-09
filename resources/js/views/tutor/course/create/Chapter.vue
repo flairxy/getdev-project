@@ -43,7 +43,7 @@
                       &nbsp;
                       <span class="text-primary pointer">
                         <i class="fa fa-plus text-primary"></i>
-                        Add Course
+                        Add Course Outline
                       </span>
                     </span>
                   </span>
@@ -90,12 +90,11 @@
               <form @submit.prevent="createOutline(chapter_id)">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <div class="form-material">
+                    <div>
+                      <label>Title</label>
                       <input type="text" class="form-control" v-model="form.course_title" />
-                      <label class="text-white" for="amount">Title</label>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <div class="form-material">
                       <div v-if="processing" class="col-6 col-md-3">
@@ -181,6 +180,9 @@ export default {
     };
   },
   methods: {
+    onVideoChanged(event) {
+      let uploadedFile = this.$refs.file.files[0];
+    },
     openMore() {
       this.seeMore = !this.seeMore;
     },
@@ -195,7 +197,7 @@ export default {
     createChapter() {
       this.processing = true;
       this.$store.dispatch("storeNewChapter", {
-        chapters: this.form.chapters
+        total_chapters: this.form.chapters
       });
       Fire.$emit("Refresh");
       this.processing = false;
@@ -208,9 +210,9 @@ export default {
     },
     createOutline(id) {
       this.$store.dispatch("storeNewOutline", {
-        id: this.makeid(7),
         title: this.form.course_title,
-        chapter: id
+        chapter: id,
+        id: this.makeid(7)
       });
       Fire.$emit("Refresh");
       $("#modal-popin").modal("hide");

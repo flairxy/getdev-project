@@ -1,7 +1,7 @@
 <template>
   <a href>
     <div class="ac-img">
-      <i class="fa fa-play-circle-o fa-4x"></i>
+      <i class="fa fa-play-circle-o fa-4x text-white"></i>
       <img :class="myClass" :height="height" :width="width" :src="image" alt />
     </div>
   </a>

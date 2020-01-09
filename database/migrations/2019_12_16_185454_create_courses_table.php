@@ -18,14 +18,23 @@ class CreateCoursesTable extends Migration
             $table->primary('id');
             $table->string('title');
             $table->string('cover_image');
-            $table->bigInteger('tutor_id');
-            $table->bigInteger('category_id');
+            $table->string('slug');
+            $table->integer('rating')->default(0);
+            $table->bigInteger('tutor_id')->unsigned();
+            $table->bigInteger('total_student')->unsigned()->default(0);
+            $table->bigInteger('total_outlines')->unsigned()->default(0);
+            $table->bigInteger('total_earned')->unsigned()->default(0);
+            $table->bigInteger('category_id')->unsigned();
             $table->integer('total_chapters');
+            $table->integer('status')->default(0);
+            $table->integer('type')->default(0);
             $table->unsignedDecimal('price')->default(0.00);
+            $table->unsignedDecimal('promo_price')->default(0.00);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('tutor_id')->references('id')->on('tutors')->onDelete('cascade');
-            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

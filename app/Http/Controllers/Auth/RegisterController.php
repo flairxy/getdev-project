@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\Student;
+use App\Models\Tutor;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,7 +31,30 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo;
+    protected function redirectTo()
+    {
+
+        $user = Auth::user();
+
+        if ($user->role == '0' && $user->ban == '0') {
+            $this->redirectTo = '/_ds/dashboard';
+            return $this->redirectTo;
+        }
+
+        if ($user->role == '1' && $user->ban == '0') {
+
+            $this->redirectTo = '/_dt/dashboard';
+            return $this->redirectTo;
+        }
+
+        if ($user->role == '2' && $user->ban == '0') {
+            session()->flash('success', 'Login Successful');
+            $this->redirectTo = '/_dmgt/dashboard';
+            return $this->redirectTo;
+        }
+    }
+
 
     /**
      * Create a new controller instance.
@@ -51,7 +77,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -63,10 +90,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $student = new Student();
+        $student->user_id = $user->id;
+        $student->save();
+        return $user;
     }
 }

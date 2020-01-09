@@ -79,20 +79,53 @@
         <div class="content-header-section">
             <ul class="nav-main-header nav-main-header-no-icons">
                 <li>
-                    <a class="ac-link" href="/">
-                        <i class="si si-home"></i>Discover
+                    @can('student')
+                    <a class="ac-link" href="/_ds/dashboard">
+                        <i class="si si-home"></i>Dashboard
                     </a>
+                    @endcan
+                    @can('tutor')
+                    <a class="ac-link" href="/_dt/dashboard">
+                        <i class="si si-home"></i>Dashboard
+                    </a>
+                    @endcan
+                    @can('admin')
+                    <a class="ac-link" href="/_dmgt/dashboard">
+                        <i class="si si-home"></i>Dashboard
+                    </a>
+                    @endcan
                 </li>
 
                 <li>
-                    <a class="ac-link" href="{{ route('login') }}">Become a
+                    <a class="ac-link" href="{{ route('tutorSignup') }}">Become a
                         Tutor</a>
                 </li>
+                @guest
+
                 <li>
-                    <a class="ac-link" href="{{ route('register') }}">Sign
-                        In</a>
+                    <a class="ac-link" href="{{ route('login') }}">Login
+                    </a>
 
                 </li>
+                <li>
+                    <a class="ac-link" href="{{ route('register') }}">Register
+                    </a>
+
+                </li>
+                @else
+                <li>
+                    <a class="ac-link" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                                                                                     document.getElementById('logout-form').submit();">
+                        <i class="si si-logout"></i>
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
+                @endguest
             </ul>
             <!-- END Header Navigation -->
 

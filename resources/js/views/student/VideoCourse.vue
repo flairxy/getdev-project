@@ -4,8 +4,7 @@
       <div id="page-loader" class="show"></div>
     </div>
     <div v-else>
-      <student-header />
-      <div class="bg-white-op-90">
+      <div class="bg-white-op-90 mt-60 py-30">
         <div class="col-lg-10 pt-20">
           <div class="container">
             <div class="row">
@@ -13,7 +12,7 @@
               <div class="col-lg-6">
                 <span class="font-s16 font-w900">
                   {{ course.title }}
-                  <span class="text-muted">by {{ course.author }}</span>
+                  <span class="text-muted">by {{ course.tutor }}</span>
                 </span>
                 <hr />
               </div>
@@ -23,18 +22,18 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-7 col-md-12 pb-20">
               <div class="ac-img text-center">
-                <i class="fa fa-play-circle-o fa-4x text-primary"></i>
-                <img class="watchVideo" :src="course.image" />
+                <i class="fa fa-play-circle-o fa-4x text-white"></i>
+                <img class="watchVideo" :src="`/`+course.cover_image" />
               </div>
               <div class="container">
                 <div class="row">
                   <!-- <div class="col-lg-1"></div> -->
-                  <div class="col-lg-10 text-center">
+                  <div class="col-lg-10 text-center" v-if="currentChapter && currentOutline.title">
                     <h5 class="font-s16 font-w900 py-10">
-                      chapter 1 - creating your first app
+                      Chapter {{ currentChapter }} -
                       <span
                         class="text-muted"
-                      >Introduction to course</span>
+                      >{{ currentOutline.title }}</span>
                     </h5>
                   </div>
                 </div>
@@ -42,127 +41,140 @@
             </div>
             <div class="col-lg-4 col-md-12 pb-10">
               <div class="container">
-                <div id="accordion" role="tablist" aria-multiselectable="true">
-                  <div class="block block-bordered block-rounded mb-2" v-for="index in 5">
-                    <div class="block-header" role="tab" :id="'accordion_h' + index">
-                      <a
-                        class="font-w700 text-muted collapsed"
-                        data-toggle="collapse"
-                        data-parent="#accordion"
-                        :href="'#accordion_q' + index"
-                        aria-expanded="false"
-                        :aria-controls="'accordion_q' + index"
-                      >Chapter {{ index }}</a>
-                    </div>
-                    <div
-                      :id="'accordion_q' + index"
-                      class="collapse"
-                      role="tabpanel"
-                      :aria-labelledby="'accordion_h' + index"
-                      data-parent="#accordion"
-                      style
-                    >
-                      <div class>
-                        <div class="col-md-12 mb-2" v-for="index in 5">
-                          <div class="bg-primary-lighter pl-10 py-10">
-                            <em class="text-primary fa fa-play-circle-o fa-2x"></em>&nbsp;
-                            <span
-                              class="text-dark playerx xfont font-s16 font-w300"
-                            >{{ chapter.slice(0,30) }}</span>
-                          </div>
-                        </div>
-                      </div>
+                <div class="col-md-12 col-lg-12 py-20">
+                  <select class="form-control" @change="selectChapter" required>
+                    <option value selected>Select Chapter</option>
+                    <option
+                      v-for="chapter in chapters"
+                      :key="chapter"
+                      :value="chapter"
+                    >Chapter {{ chapter }}</option>
+                  </select>
+                </div>
+                <div class="col-md-12 col-lg-12 py-10">
+                  <!-- <ul style="padding-inline-start: 10px;">
+                  <li >-->
+                  <div class="mb-2" v-for="(outline, index) in currentOutlines" :key="outline.id">
+                    <div class="bg-primary-lighter pl-10 py-10">
+                      <em class="text-primary fa fa-play-circle-o fa-2x"></em>&nbsp;
+                      <span
+                        @click="getOutline(outline)"
+                        class="text-dark playerx xfont font-small font-w300 pointer"
+                      >Lesson {{ index + 1 }} - {{ outline.title.slice(0,28) }}</span>
                     </div>
                   </div>
+                  <!-- </li>
+                  </ul>-->
                 </div>
               </div>
             </div>
           </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-1"></div>
-              <div class="col-lg-6">
-                <span class="font-s16 font-w900">
-                  <span class="text-muted">Lecture Summary</span>
-                </span>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum officiis veniam possimus quis nihil? Amet magnam aut in culpa aperiam? Minima nemo, provident maxime quo dolore minus! Libero, voluptatem praesentium!</p>
+          <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-7 col-md-12 pb-20">
+              <div class="container">
+                <div class="col-12">
+                  <h5 class="text-muted">Leave a review</h5>
+                </div>
+                <form @submit.prevent="reviewCourse">
+                  <div class="py-10 col-4">
+                    <select v-model="rating" class="form-control" required>
+                      <option value="1">1 star</option>
+                      <option value="2">2 stars</option>
+                      <option value="3">3 stars</option>
+                      <option value="4">4 stars</option>
+                      <option value="5">5 stars</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <textarea
+                      required
+                      class="form-control"
+                      v-model="body"
+                      rows="6"
+                      placeholder="Enter your review here.."
+                    ></textarea>
+                    <div class="py-10">
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                      >{{ !currentRating ? `Review` : `Update Review` }}</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <tutor-ad />
+      <!-- <tutor-ad /> -->
     </div>
   </div>
 </template>
 
 <script>
+import { RepositoryFactory as Repo } from "../../repository/RepositoryFactory";
+
+const AR = Repo.get("academy");
 export default {
   data() {
     return {
-      chapter: "Introduction to the course",
+      rating: 5,
+      body: "",
+      user: "",
       showHidden: false,
+      currentChapter: "",
+      currentOutline: {},
       showReviews: false,
       fetchingCourse: true,
       course: {},
+      outlines: [],
+      currentOutlines: [],
+      currentRating: {},
+      chapters: [],
       course_id: this.$route.params.id,
-      review:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolorum obcaecati quia nemo ad facilis voluptatum, consequatur.",
-      courses: [
-        {
-          image: "/images/luser1.png",
-          author: "Nicholas Cage",
-          amount: "9.99",
-          duration: "4:24:00",
-          title: "How to be the perfect player",
-          studentNUmber: "253,000",
-          image: "/images/bg.jpg",
-          rating: 5,
-          totalLesson: "18",
-          now: 22,
-          id: "ds-zwedsd-23ter23-sda90ps-32382zd-zxz2x",
-          slug: "become-the-perfect-assasin",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium nostrum accusamus, blanditiis libero facere."
-        },
-
-        {
-          image: "/images/luser1.png",
-          author: "Rachel Okorie",
-          amount: "9.99",
-          duration: "4:24:00",
-          title: "Public Speaking Masterclass",
-          studentNUmber: "23,000",
-          image: "/images/bg.jpg",
-          rating: 5,
-          totalLesson: "18",
-          now: 45,
-          id: "ds-zxs23sd-2723-sdas-3212zd-zxzx",
-          slug: "public-speaking-masterclass",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium nostrum accusamus, blanditiis libero facere."
-        },
-
-        {
-          image: "/images/luser1.png",
-          author: "Jane Doe",
-          amount: "19.79",
-          duration: "7:24:00",
-          title: "Vuejs 2.0 - The ultimate Vue Guide",
-          studentNUmber: "43,000",
-          image: "/images/bg.jpg",
-          rating: 4,
-          totalLesson: "23",
-          now: 82,
-          id: "ds-zxsdsd-2323-sdas-3232zd-zxzx",
-          slug: "ultimate-vue-guide",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium nostrum accusamus, blanditiis libero facere quisquam."
-        }
-      ]
+      courses: []
     };
   },
   methods: {
+    reviewCourse() {
+      let data = {
+        rating: this.rating,
+        body: this.body,
+        course: this.course_id,
+        user: this.user
+      };
+      AR.reviewCourse(data)
+        .then(res => {
+          Fire.$emit("Refresh");
+          toast.fire({
+            type: res.data.status,
+            title: res.data.message
+          });
+        })
+        .catch(() => {
+          toast.fire({
+            type: "error",
+            title: "Rating Failed"
+          });
+        });
+    },
+    getOutline(outline) {
+      this.currentOutline = outline;
+    },
+    selectChapter(event) {
+      let id = event.target.value;
+      this.currentChapter = id;
+      this.currentOutline = {};
+      let outlines = [];
+      this.outlines.map(outline => {
+        if (outline.chapter == id) {
+          outlines.push(outline);
+        }
+      });
+      //   console.log(this.outlines);
+      this.currentOutlines = outlines;
+    },
     previewCourse(slug) {
       this.$router.push({
         name: "StudentCoursePreview",
@@ -183,10 +195,40 @@ export default {
     },
     moreReviews() {
       this.showReviews = !this.showReviews;
+    },
+
+    getCourse() {
+      let course = this.$route.params.id;
+      AR.studentCourse(course).then(res => {
+        this.course = res.data.course;
+        let outlines = res.data.outlines;
+        this.outlines = outlines;
+        this.fetchingCourse = false;
+        let chapters = [];
+        outlines.map(outline => {
+          chapters.push(outline.chapter);
+        });
+        this.chapters = new Set(chapters);
+      });
+    },
+    getUser() {
+      AR.loggedInUser().then(res => {
+        this.user = res.data.id;
+        AR.getCourseReview(this.course_id, res.data.id).then(res => {
+          this.currentRating = res.data;
+        });
+      });
     }
   },
   created() {
     this.loadCourse();
+    this.getCourse();
+    this.getUser();
+    Fire.$on("Refresh", () => {
+      this.loadCourse();
+      this.getCourse();
+      this.getUser();
+    });
   }
 };
 </script>

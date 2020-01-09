@@ -30,4 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'bpay' => [
+        'public' => env('MIX_BPAY_PUBLIC_KEY'),
+        'secret' => env('MIX_BPAY_SECRET_KEY'),
+        'id' => env('MIX_BPAY_BUSINESS_ID'),
+        'email' => env('MIX_BPAY_EMAIL_ID'),
+        'currency' => env('MIX_CURRENCY'),
+    ]
+
 ];

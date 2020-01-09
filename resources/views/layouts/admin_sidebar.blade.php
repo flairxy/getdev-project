@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Codebase - Bootstrap 4 Admin Template &amp; UI Framework</title>
+    <title>D'academu | Management</title>
 
     <meta name="description"
         content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
@@ -27,6 +27,7 @@
 
     <link rel="stylesheet" href="{{ asset('js/plugins/slick/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/slick/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/dropzonejs/dist/dropzone.css') }}">
     @yield('css_after')
 
     <!-- Scripts -->
@@ -36,65 +37,10 @@
 </head>
 
 <body>
-    <!-- Page Container -->
-    <!--
-            Available classes for #page-container:
 
-        GENERIC
-
-            'enable-cookies'                            Remembers active color theme between pages (when set through color theme helper Template._uiHandleTheme())
-
-        SIDEBAR & SIDE OVERLAY
-
-            'sidebar-r'                                 Right Sidebar and left Side Overlay (default is left Sidebar and right Side Overlay)
-            'sidebar-mini'                              Mini hoverable Sidebar (screen width > 991px)
-            'sidebar-o'                                 Visible Sidebar by default (screen width > 991px)
-            'sidebar-o-xs'                              Visible Sidebar by default (screen width < 992px)
-            'sidebar-inverse'                           Dark themed sidebar
-
-            'side-overlay-hover'                        Hoverable Side Overlay (screen width > 991px)
-            'side-overlay-o'                            Visible Side Overlay by default
-
-            'enable-page-overlay'                       Enables a visible clickable Page Overlay (closes Side Overlay on click) when Side Overlay opens
-
-            'side-scroll'                               Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (screen width > 991px)
-
-        HEADER
-
-            ''                                          Static Header if no class is added
-            'page-header-fixed'                         Fixed Header
-
-        HEADER STYLE
-
-            ''                                          Classic Header style if no class is added
-            'page-header-modern'                        Modern Header style
-            'page-header-inverse'                       Dark themed Header (works only with classic Header style)
-            'page-header-glass'                         Light themed Header with transparency by default
-                                                        (absolute position, perfect for light images underneath - solid light background on scroll if the Header is also set as fixed)
-            'page-header-glass page-header-inverse'     Dark themed Header with transparency by default
-                                                        (absolute position, perfect for dark images underneath - solid dark background on scroll if the Header is also set as fixed)
-
-        MAIN CONTENT LAYOUT
-
-            ''                                          Full width Main Content if no class is added
-            'main-content-boxed'                        Full width Main Content with a specific maximum width (screen width > 1200px)
-            'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
-        -->
     <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
 
 
-        <!-- Sidebar -->
-        <!--
-                Helper classes
-
-                Adding .sidebar-mini-hide to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
-                Adding .sidebar-mini-show to an element will make it visible (opacity: 1) when the sidebar is in mini mode
-                    If you would like to disable the transition, just add the .sidebar-mini-notrans along with one of the previous 2 classes
-
-                Adding .sidebar-mini-hidden to an element will hide it when the sidebar is in mini mode
-                Adding .sidebar-mini-visible to an element will show it only when the sidebar is in mini mode
-                    - use .sidebar-mini-visible-b if you would like to be a block when visible (display: block)
-            -->
         <nav id="sidebar">
             <!-- Sidebar Content -->
             <div class="sidebar-content">
@@ -122,10 +68,10 @@
 
                         <!-- Logo -->
                         <div class="content-header-item">
-                            <a class="link-effect font-w700" href="/dashboard">
-                                <i class="si si-fire text-primary"></i>
-                                <span class="font-size-xl text-dual-primary-dark">code</span><span
-                                    class="font-size-xl text-primary">base</span>
+                            <a class="link-effect font-w700" href="/">
+                                <i class="si si-book-open"></i>
+                                <span class="font-size-xl text-primary-dark">D'</span><span
+                                    class="font-size-xl">academi</span>
                             </a>
                         </div>
                         <!-- END Logo -->
@@ -138,32 +84,25 @@
                 <div class="content-side content-side-full content-side-user px-10 align-parent">
                     <!-- Visible only in mini mode -->
                     <div class="sidebar-mini-visible-b align-v animated fadeIn">
-                        <img class="img-avatar img-avatar32" src="{{ asset('media/avatars/avatar15.jpg') }}" alt="">
+                        <img class="img-avatar img-avatar32" src="{{ asset('images/avatar9.jpg') }}" alt="">
                     </div>
                     <!-- END Visible only in mini mode -->
 
                     <!-- Visible only in normal mode -->
                     <div class="sidebar-mini-hidden-b text-center">
                         <a class="img-link" href="javascript:void(0)">
-                            <img class="img-avatar" src="{{ asset('media/avatars/avatar15.jpg') }}" alt="">
+                            {{-- @if($tutor->image)
+                            <img class="img-avatar" src="{{ asset('images/avatars') }}/{{ $tutor->image }}" alt="">
+                            @else --}}
+                            <img class="img-avatar" src="{{ asset('images/avatar9.jpg') }}" alt="">
+                            {{-- @endif --}}
                         </a>
                         <ul class="list-inline mt-10">
                             <li class="list-inline-item">
                                 <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase"
-                                    href="javascript:void(0)">J. Smith</a>
+                                    href="javascript:void(0)">{{ Auth::user()->username }}</a>
                             </li>
-                            <li class="list-inline-item">
-                                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                                <a class="link-effect text-dual-primary-dark" data-toggle="layout"
-                                    data-action="sidebar_style_inverse_toggle" href="javascript:void(0)">
-                                    <i class="si si-drop"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="link-effect text-dual-primary-dark" href="javascript:void(0)">
-                                    <i class="si si-logout"></i>
-                                </a>
-                            </li>
+
                         </ul>
                     </div>
                     <!-- END Visible only in normal mode -->
@@ -174,34 +113,72 @@
                 <div class="content-side content-side-full">
                     <ul class="nav-main">
                         <li>
-                            <a class="{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
+                            <a class="{{ request()->is('dashboard') ? ' active' : '' }}" href="/_dmgt/dashboard">
                                 <i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span>
                             </a>
                         </li>
-                        <li class="nav-main-heading">
-                            <span class="sidebar-mini-visible">VR</span><span class="sidebar-mini-hidden">Various</span>
+
+
+                        <li class="{{ request()->is('messages/*') ? ' open' : '' }}">
+                            <a href="/_dmgt/notifications/sent"><i class="si si-envelope"></i>
+                                <span class="sidebar-mini-hide">Notifications</span>
+
+                            </a>
+
                         </li>
-                        <li class="{{ request()->is('examples/*') ? ' open' : '' }}">
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span
-                                    class="sidebar-mini-hide">Examples</span></a>
+
+                        <li class="{{ request()->is('earnings/*') ? ' open' : '' }}">
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i
+                                    class="si si-credit-card"></i><span class="sidebar-mini-hide">Earnings</span></a>
                             <ul>
-                                <li>
-                                    <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}"
-                                        href="/examples/plugin">Plugin</a>
-                                </li>
-                                <li>
-                                    <a class="{{ request()->is('examples/blank') ? ' active' : '' }}"
-                                        href="/examples/blank">Blank</a>
-                                </li>
+                                <router-link to="" tag="li">
+                                    <a class="{{ request()->is('earnings/invoices') ? ' active' : '' }}"
+                                        href="/_dmgt/earnings/summary">Summary</a>
+                                </router-link>
+                                <router-link to="" tag="li">
+                                    <a class="{{ request()->is('earnings/withdrawals') ? ' active' : '' }}"
+                                        href="/_dmgt/earnings/withdrawals">Withdrawals</a>
+                                </router-link>
                             </ul>
                         </li>
-                        <li class="nav-main-heading">
-                            <span class="sidebar-mini-visible">MR</span><span class="sidebar-mini-hidden">More</span>
+
+                        <li class="{{ request()->is('earnings/*') ? ' open' : '' }}">
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-users"></i><span
+                                    class="sidebar-mini-hide">Users</span></a>
+                            <ul>
+                                <router-link to="" tag="li">
+                                    <a href="/_dmgt/users/tutors">Tutors</a>
+                                </router-link>
+                                <router-link to="" tag="li">
+                                    <a href="/_dmgt/users/students">Students</a>
+                                </router-link>
+                            </ul>
                         </li>
+
                         <li>
-                            <a href="/">
-                                <i class="si si-globe"></i><span class="sidebar-mini-hide">Landing</span>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i
+                                    class="si si-book-open"></i><span class="sidebar-mini-hide">Courses</span></a>
+                            <ul>
+                                <router-link to="" tag="li">
+                                    <a href="/_dmgt/courses/approved">Approved</a>
+                                </router-link>
+                                <router-link to="" tag="li">
+                                    <a href="/_dmgt/courses/pending">Pending</a>
+                                </router-link>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="nav-menu" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
+                                <i class="si si-logout"></i>
+                                {{ __('Logout') }}
                             </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -225,258 +202,13 @@
                     </button>
                     <!-- END Toggle Sidebar -->
 
-                    <!-- Open Search Section -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    <button type="button" class="btn btn-circle btn-dual-secondary" data-toggle="layout"
-                        data-action="header_search_on">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <!-- END Open Search Section -->
-
-                    <!-- Layout Options (used just for demonstration) -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-circle btn-dual-secondary"
-                            id="page-header-options-dropdown" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="fa fa-wrench"></i>
-                        </button>
-                        <div class="dropdown-menu min-width-300" aria-labelledby="page-header-options-dropdown">
-                            <h5 class="h6 text-center py-10 mb-10 border-b text-uppercase">Settings</h5>
-                            <h6 class="dropdown-header">Color Themes</h6>
-                            <div class="row no-gutters text-center mb-5">
-                                <div class="col-2 mb-5">
-                                    <a class="text-default" data-toggle="theme" data-theme="default"
-                                        href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2 mb-5">
-                                    <a class="text-elegance" data-toggle="theme" data-theme="/css/themes/elegance.css"
-                                        href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2 mb-5">
-                                    <a class="text-pulse" data-toggle="theme" data-theme="/css/themes/pulse.css"
-                                        href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2 mb-5">
-                                    <a class="text-flat" data-toggle="theme" data-theme="/css/themes/flat.css"
-                                        href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2 mb-5">
-                                    <a class="text-corporate" data-toggle="theme" data-theme="/css/themes/corporate.css"
-                                        href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                                <div class="col-2 mb-5">
-                                    <a class="text-earth" data-toggle="theme" data-theme="/css/themes/earth.css"
-                                        href="javascript:void(0)">
-                                        <i class="fa fa-2x fa-circle"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <h6 class="dropdown-header">Header</h6>
-                            <div class="row gutters-tiny text-center mb-5">
-                                <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-block btn-alt-secondary"
-                                        data-toggle="layout" data-action="header_fixed_toggle">Fixed Mode</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="button"
-                                        class="btn btn-sm btn-block btn-alt-secondary d-none d-lg-block mb-10"
-                                        data-toggle="layout" data-action="header_style_classic">Classic Style</button>
-                                </div>
-                            </div>
-                            <h6 class="dropdown-header">Sidebar</h6>
-                            <div class="row gutters-tiny text-center mb-5">
-                                <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-block btn-alt-secondary mb-10"
-                                        data-toggle="layout" data-action="sidebar_style_inverse_off">Light</button>
-                                </div>
-                                <div class="col-6">
-                                    <button type="button" class="btn btn-sm btn-block btn-alt-secondary mb-10"
-                                        data-toggle="layout" data-action="sidebar_style_inverse_on">Dark</button>
-                                </div>
-                            </div>
-                            <div class="d-none d-xl-block">
-                                <h6 class="dropdown-header">Main Content</h6>
-                                <button type="button" class="btn btn-sm btn-block btn-alt-secondary mb-10"
-                                    data-toggle="layout" data-action="content_layout_toggle">Toggle Layout</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END Layout Options -->
                 </div>
                 <!-- END Left Section -->
 
-                <!-- Right Section -->
-                <div class="content-header-section">
-                    <!-- User Dropdown -->
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user d-sm-none"></i>
-                            <span class="d-none d-sm-inline-block">J. Smith</span>
-                            <i class="fa fa-angle-down ml-5"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right min-width-200"
-                            aria-labelledby="page-header-user-dropdown">
-                            <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">User</h5>
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="si si-user mr-5"></i> Profile
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span><i class="si si-envelope-open mr-5"></i> Inbox</span>
-                                <span class="badge badge-primary">3</span>
-                            </a>
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="si si-note mr-5"></i> Invoices
-                            </a>
-                            <div class="dropdown-divider"></div>
 
-                            <!-- Toggle Side Overlay -->
-                            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout"
-                                data-action="side_overlay_toggle">
-                                <i class="si si-wrench mr-5"></i> Settings
-                            </a>
-                            <!-- END Side Overlay -->
-
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="si si-logout mr-5"></i> Sign Out
-                            </a>
-                        </div>
-                    </div>
-                    <!-- END User Dropdown -->
-
-                    <!-- Notifications -->
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-notifications"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-flag"></i>
-                            <span class="badge badge-primary badge-pill">5</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right min-width-300"
-                            aria-labelledby="page-header-notifications">
-                            <h5 class="h6 text-center py-10 mb-0 border-b text-uppercase">Notifications</h5>
-                            <ul class="list-unstyled my-20">
-                                <li>
-                                    <a class="text-body-color-dark media mb-15" href="javascript:void(0)">
-                                        <div class="ml-5 mr-15">
-                                            <i class="fa fa-fw fa-check text-success"></i>
-                                        </div>
-                                        <div class="media-body pr-10">
-                                            <p class="mb-0">You’ve upgraded to a VIP account successfully!</p>
-                                            <div class="text-muted font-size-sm font-italic">15 min ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-body-color-dark media mb-15" href="javascript:void(0)">
-                                        <div class="ml-5 mr-15">
-                                            <i class="fa fa-fw fa-exclamation-triangle text-warning"></i>
-                                        </div>
-                                        <div class="media-body pr-10">
-                                            <p class="mb-0">Please check your payment info since we can’t validate them!
-                                            </p>
-                                            <div class="text-muted font-size-sm font-italic">50 min ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-body-color-dark media mb-15" href="javascript:void(0)">
-                                        <div class="ml-5 mr-15">
-                                            <i class="fa fa-fw fa-times text-danger"></i>
-                                        </div>
-                                        <div class="media-body pr-10">
-                                            <p class="mb-0">Web server stopped responding and it was automatically
-                                                restarted!</p>
-                                            <div class="text-muted font-size-sm font-italic">4 hours ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-body-color-dark media mb-15" href="javascript:void(0)">
-                                        <div class="ml-5 mr-15">
-                                            <i class="fa fa-fw fa-exclamation-triangle text-warning"></i>
-                                        </div>
-                                        <div class="media-body pr-10">
-                                            <p class="mb-0">Please consider upgrading your plan. You are running out of
-                                                space.</p>
-                                            <div class="text-muted font-size-sm font-italic">16 hours ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-body-color-dark media mb-15" href="javascript:void(0)">
-                                        <div class="ml-5 mr-15">
-                                            <i class="fa fa-fw fa-plus text-primary"></i>
-                                        </div>
-                                        <div class="media-body pr-10">
-                                            <p class="mb-0">New purchases! +$250</p>
-                                            <div class="text-muted font-size-sm font-italic">1 day ago</div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-center mb-0" href="javascript:void(0)">
-                                <i class="fa fa-flag mr-5"></i> View All
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Right Section -->
             </div>
             <!-- END Header Content -->
 
-            <!-- Header Search -->
-            <div id="page-header-search" class="overlay-header">
-                <div class="content-header content-header-fullrow">
-                    <form action="/dashboard" method="POST">
-                        @csrf
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <!-- Close Search Section -->
-                                <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                                <button type="button" class="btn btn-secondary" data-toggle="layout"
-                                    data-action="header_search_off">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <!-- END Close Search Section -->
-                            </div>
-                            <input type="text" class="form-control" placeholder="Search or hit ESC.."
-                                id="page-header-search-input" name="page-header-search-input">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-secondary">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- END Header Search -->
-
-            <!-- Header Loader -->
-            <!-- Please check out the Activity page under Elements category to see examples of showing/hiding it -->
-            <div id="page-header-loader" class="overlay-header bg-primary">
-                <div class="content-header content-header-fullrow text-center">
-                    <div class="content-header-item">
-                        <i class="fa fa-sun-o fa-spin text-white"></i>
-                    </div>
-                </div>
-            </div>
-            <!-- END Header Loader -->
         </header>
         <!-- END Header -->
 
@@ -489,13 +221,10 @@
         <!-- Footer -->
         <footer id="page-footer" class="opacity-0">
             <div class="content py-20 font-size-xs clearfix">
-                <div class="float-right">
-                    Crafted with <i class="fa fa-heart text-pulse"></i> by <a class="font-w600"
-                        href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
-                </div>
+
                 <div class="float-left">
-                    <a class="font-w600" href="https://1.envato.market/95j" target="_blank">Codebase</a> &copy; <span
-                        class="js-year-copy">2017</span>
+                    <a class="font-w600" href="#" target="_blank">Bitfxt Lab</a> &copy; <span
+                        class="js-year-copy">2019</span>
                 </div>
             </div>
         </footer>
@@ -509,6 +238,7 @@
     <script src="{{ asset('js/vue-app.js') }}"></script>
     <script src="{{ asset('js/laravel.app.js') }}"></script>
     <script src="{{ asset('js/plugins/slick/slick.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dropzonejs/dropzone.min.js') }}"></script>
 
     @yield('js_after')
 </body>

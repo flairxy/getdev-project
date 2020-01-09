@@ -16,13 +16,20 @@ class CreateTutorsTable extends Migration
         Schema::create('tutors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('user_id');
-            $table->string('tutor_id')->nullable();
-            $table->integer('rating')->default(0);
+            $table->string('tutor_id');
+            // $table->integer('rating')->default(0);
             $table->integer('courses')->default(0);
             $table->integer('students')->default(0);
-            $table->integer('earnings')->default(0);
-            $table->string('identity');
+            $table->decimal('balance')->default(0.00);
+            $table->decimal('total_earned')->default(0.00);
+            $table->string('identity')->nullable();
             $table->boolean('identity_status')->default(0);
+            $table->string('image')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
 
 

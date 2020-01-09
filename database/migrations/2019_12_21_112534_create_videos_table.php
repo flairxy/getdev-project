@@ -16,15 +16,11 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
-            $table->string('title');
-            $table->bigInteger('length');
-            $table->bigInteger('course_id');
-            $table->bigInteger('chapter_id');
+            $table->uuid('outline_id');
             $table->string('url')->nullable();
             $table->timestamps();
 
-            $table->foreign('tutor_id')->references('id')->on('tutors')->onDelete('cascade');
-            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('outline_id')->references('id')->on('outlines')->onDelete('cascade');
         });
     }
 

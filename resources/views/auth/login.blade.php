@@ -16,6 +16,23 @@
                     <h2 class="h5 font-w400 text-muted mb-0">It’s a great day today!</h2>
                 </div>
 
+                <div class="">
+                    @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                    @elseif (session('info'))
+                    <div class="alert alert-info">
+                        {{ session('status') }}
+                    </div>
+                    @elseif (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                    @endif
+
+                </div>
+
                 <form class="js-validation-signin" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="block block-rounded block-shadow">
@@ -26,7 +43,7 @@
                         <div class="block-content">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <label for="login-username">Username</label>
+                                    <label for="login-username">Email</label>
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -41,15 +58,15 @@
                             <div class="form-group row">
                                 <div class="col-12">
                                     <label for="login-password">Password</label>
-                                    <<input id="password" type="password"
+                                    <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
                                         required autocomplete="current-password">
 
-                                        @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row mb-0">

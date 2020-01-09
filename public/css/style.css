@@ -237,6 +237,10 @@
     cursor: pointer;
 }
 
+.ac-py-27 {
+    padding-top: 27px !important;
+}
+
 /* media query starts here */
 
 @media (min-width: 320px) and (max-width: 320px) {
@@ -348,10 +352,16 @@
     /* .editx {
         margin-top: 70px
     } */
-
+    .ac-py-27 {
+        padding-top: 0 !important;
+    }
 }
 
-
+@media(max-width: 768px) {
+    .ac-py-27 {
+        padding-top: 0 !important;
+    }
+}
 
 @media (min-width: 768px) and (max-width: 1025px) {
     .ac-hero {

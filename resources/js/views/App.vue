@@ -1,10 +1,17 @@
 <template>
-  <div class="mt-60">
+  <div>
     <router-view></router-view>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  mounted() {
+    this.$store.dispatch("storeCurrency", {
+      //   currency: "₦"
+      currency: "$"
+    });
+  }
+};
 </script>
 <style>
 .mt-60 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Tutor;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,19 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            $user = Auth::user();
+
+            if ($user->role == '0' && $user->ban == '0') {
+                return redirect('/_ds/dashboard');
+            } else
+
+            if ($user->role == '1' && $user->ban == '0') {
+                return redirect('/_dt/dashboard');
+            } else
+
+            if ($user->role == '2' && $user->ban == '0') {
+                return redirect('/_dmgt/dashboard');;
+            }
         }
 
         return $next($request);

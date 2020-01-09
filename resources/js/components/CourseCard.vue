@@ -1,5 +1,5 @@
 <template>
-  <div class="block block-themed text-center ac-box">
+  <div class="block block-themed text-center ac-box pointer">
     <a
       class="block block-link-pop bg-white-op-90 text-center"
       v-if="myCourse"
@@ -7,7 +7,7 @@
       @click.prevent="handleClick"
     >
       <div class="block mb-2 ac-sm-box-img">
-        <img class="ac-img" :src="bgImage" alt />
+        <img height="180" class="ac-img" :src="`/`+bgImage" alt />
       </div>
       <div class="ac-title-pad">
         <div class="ac-course-title text-primary">{{ courseTitle }}</div>
@@ -15,24 +15,21 @@
       </div>
 
       <div class="ac-title-pad">
-        <span class="font-w400 ac-time">{{ courseTotalLesson }} Lessons ({{ courseDuration }})</span>
+        <span class="font-w400 ac-time">{{ courseTotalLesson }} Lessons</span>
       </div>
 
       <div class="ac-title-pad ac-author text-muted">
         <span class="js-rating">
           <i v-for="index in courseRating" data-alt="2" class="fa fa-fw fa-star text-warning"></i>
+          <i v-for="index in (5-courseRating)" data-alt="2" class="fa fa-fw fa-star text-muted"></i>
         </span>
         {{ courseRating }} ({{ courseStudentNumber }})
-      </div>
-
-      <div>
-        <b-progress height="0.5rem" :value="value" :max="max" class="mb-3" animated></b-progress>
       </div>
     </a>
 
     <a class="block block-link-pop bg-white-op-90 text-center" v-else @click.prevent="handleClick">
       <div class="block mb-2 ac-sm-box-img">
-        <img class="ac-img" :src="bgImage" alt />
+        <img height="180" class="ac-img" :src="`/`+bgImage" alt />
       </div>
       <div class="ac-title-pad">
         <div class="ac-course-title text-primary">{{ courseTitle }}</div>
@@ -40,18 +37,20 @@
       </div>
 
       <div class="ac-title-pad">
-        <span class="font-w400 ac-time">{{ courseTotalLesson }} Lessons ({{ courseDuration }})</span>
+        <span class="font-w400 ac-time">{{ courseTotalLesson }} Lessons</span>
       </div>
 
       <div class="ac-title-pad ac-author text-muted">
         <span class="js-rating">
           <i v-for="index in courseRating" data-alt="2" class="fa fa-fw fa-star text-warning"></i>
+          <i v-for="index in (5-courseRating)" data-alt="2" class="fa fa-fw fa-star text-muted"></i>
         </span>
         {{ courseRating }} ({{ courseStudentNumber }})
       </div>
 
       <div class="ac-title-pad text-right">
-        <span class="h5 font-w700 text-primary pr-20">${{ courseAmount }}</span>
+        <span v-if="premium == 0" class="h5 font-w700 text-primary pr-20">Free</span>
+        <span v-else class="h5 font-w700 text-primary pr-20">{{ currency + courseAmount }}</span>
       </div>
     </a>
   </div>
@@ -64,12 +63,15 @@ export default {
     courseRating: Number,
     courseTitle: String,
     courseAuthor: String,
-    courseDuration: String,
     courseAmount: String,
     courseTotalLesson: String,
     myCourse: Boolean,
-    max: Number,
-    value: Number
+    premium: Number
+  },
+  data() {
+    return {
+      currency: this.$store.state.currency
+    };
   },
   methods: {
     handleClick() {

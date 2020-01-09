@@ -8,12 +8,38 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         chapters: [],
+        course: "",
         title: null,
-        outlines: []
+        outlines: [],
+        category_id: "",
+        type: "",
+        cover_image: "",
+        price: "",
+        promo_price: "",
+        user: "",
+        currency: ""
     },
     getters: {
+        getAllData: state => {
+            let data = {
+                total_chapters: state.chapters,
+                title: state.title,
+                type: state.type,
+                outlines: state.outlines,
+                category_id: state.category_id,
+                price: state.price,
+                promo_price: state.promo_price,
+                user: state.user,
+                cover: state.cover_image,
+                course: state.course
+            };
+            return data;
+        },
         getChapters: state => {
             return state.chapters;
+        },
+        getCourse: state => {
+            return state.course;
         },
         getOutlines: state => {
             return state.outlines;
@@ -23,6 +49,8 @@ export default new Vuex.Store({
         storeChapter(state, courseData) {
             state.chapters = courseData.chapters;
             state.title = courseData.title;
+            state.category_id = courseData.category_id;
+            state.type = courseData.type;
         },
         storeExtraChapter(state, courseData) {
             state.chapters = [...state.chapters, ...courseData.chapters];
@@ -36,19 +64,44 @@ export default new Vuex.Store({
         deleteChapter(state, data) {
             state.chapters = data.chapters;
             state.outlines = data.outlines;
+        },
+        storeCoverImage(state, data) {
+            state.cover_image = data;
+        },
+        storePrice(state, data) {
+            state.price = data.price;
+            state.promo_price = data.promo_price;
+        },
+        storeUser(state, data) {
+            state.user = data;
+        },
+        storeCourse(state, data) {
+            state.course = data;
+        },
+        storeCurrency(state, data) {
+            state.currency = data;
         }
     },
     actions: {
+        storeCourse({ commit }, data) {
+            commit("storeCourse", data);
+        },
+        storeUser({ commit }, data) {
+            commit("storeUser", data);
+        },
         storeCourseData({ commit }, data) {
+            console.log(data);
             let addChapters = [];
-            for (let i = 1; i <= data.chapters; i++) {
+            for (let i = 1; i <= data.total_chapters; i++) {
                 addChapters.push({
                     id: i
                 });
             }
             commit("storeChapter", {
                 title: data.title,
-                chapters: addChapters
+                chapters: addChapters,
+                category_id: data.category_id,
+                type: data.type
             });
 
             // dispatch is used to call another action function
@@ -71,25 +124,33 @@ export default new Vuex.Store({
                 ]
             });
         },
-        storeNewChapter({ commit }, data) {
+        storeNewChapter({ commit, dispatch }, data) {
             let extraChapters = [];
             let lastChapter = [];
             // get the chapters in state
             lastChapter = this.getters.getChapters;
-            // get the last chapter
-            let totalChapter = lastChapter[lastChapter.length - 1];
-            // add the value of the last chapter with the total number of chapters to be generated
-            let x = parseInt(data.chapters) + parseInt(totalChapter.id);
+            if (lastChapter.length < 1) {
+                let newData = {
+                    total_chapters: data.total_chapters
+                };
+                dispatch("storeCourseData", newData);
+            } else {
+                // get the last chapter
+                let totalChapter = lastChapter[lastChapter.length - 1];
+                // add the value of the last chapter with the total number of chapters to be generated
+                let x =
+                    parseInt(data.total_chapters) + parseInt(totalChapter.id);
 
-            // the next chapter should start from the value of the last chapter + 1
-            for (let i = totalChapter.id + 1; i <= x; i++) {
-                extraChapters.push({
-                    id: i
+                // the next chapter should start from the value of the last chapter + 1
+                for (let i = totalChapter.id + 1; i <= x; i++) {
+                    extraChapters.push({
+                        id: i
+                    });
+                }
+                commit("storeExtraChapter", {
+                    chapters: extraChapters
                 });
             }
-            commit("storeExtraChapter", {
-                chapters: extraChapters
-            });
         },
         deleteOutline({ commit }, data) {
             let newOutlines = [];
@@ -137,6 +198,26 @@ export default new Vuex.Store({
                     "warning"
                 );
             }
+        },
+        storeCourseImage({ commit }, data) {
+            commit("storeCoverImage", data);
+            toast.fire({
+                type: "success",
+                title: "Image Saved"
+            });
+        },
+        storeCoursePrice({ commit }, data) {
+            commit("storePrice", {
+                price: data.price,
+                promo_price: data.promo_price
+            });
+            toast.fire({
+                type: "success",
+                title: "Price Set"
+            });
+        },
+        storeCurrency({ commit }, data) {
+            commit("storeCurrency", data.currency);
         }
     }
 });

@@ -23,14 +23,19 @@ import CourseLessons from "./components/CourseLessons";
 import CourseAims from "./components/CourseAims";
 import Thumbnail from "./components/Thumbnail";
 import TutorAd from "./components/Ad";
+import MessageCounter from "./components/Messages";
+import NewMessage from "./components/Message";
 import VueFormWizard from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
+import QrcodeVue from "qrcode.vue";
 
 Vue.use(VueFormWizard);
 Vue.use(BootstrapVue);
 Vue.use(vueCountryRegionSelect);
 
 // components
+Vue.component("QrcodeVue", QrcodeVue);
+Vue.component("create-message", NewMessage);
 Vue.component("course-card", CourseCard);
 Vue.component("student-header", StudentHeader);
 Vue.component("review-top", ReviewTop);
@@ -61,6 +66,7 @@ Vue.use(VueProgressBar, {
 // Vue.component("add-modal", AddModal);
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+Vue.component("messages", MessageCounter);
 
 window.Form = Form;
 window.Fire = new Vue();
@@ -87,4 +93,11 @@ const app = new Vue({
     router,
     Fire,
     store
+});
+const stats = new Vue({
+    el: "#stats"
+    // components: { App },
+    // router,
+    // Fire,
+    // store
 });

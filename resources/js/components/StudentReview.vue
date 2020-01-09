@@ -5,6 +5,7 @@
         <span class="h5 text-dark">{{ studentName }}</span>
         <span class="js-rating">
           <i v-for="index in courseRating" data-alt="2" class="fa fa-fw fa-star text-warning"></i>
+          <i v-for="index in (5 - courseRating)" data-alt="2" class="fa fa-fw fa-star text-muted"></i>
         </span>
         <div>
           <p class="text-sm">{{ studentReview }}</p>

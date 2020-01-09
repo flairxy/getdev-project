@@ -16,7 +16,7 @@
                     <h2 class="h5 font-w400 text-muted mb-0">We’re excited to have you on board!</h2>
                 </div>
 
-                <form class="js-validation-signin" action="{{ route('register') }}">
+                <form class="js-validation-signin" action="{{ route('register') }}" method="POST">
                     @csrf
                     <div class="block block-rounded block-shadow">
                         <div class="block-header ac-card-header-bg">
@@ -26,12 +26,26 @@
                         <div class="block-content">
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <label for="login-username">Username</label>
+                                    <label for="login-username">Fullname</label>
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
                                         value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                     @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <label for="login-username">Username</label>
+                                    <input id="username" type="text"
+                                        class="form-control @error('username') is-invalid @enderror" name="username"
+                                        value="{{ old('username') }}" required autocomplete="username" autofocus>
+
+                                    @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

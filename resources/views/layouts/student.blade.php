@@ -43,6 +43,7 @@
     <div id="page-container"
         class="sidebar-hidden side-scroll page-header-glass page-header-glass main-content-boxed enable-page-overlay page-header-scroll">
         <main id="main-container">
+            @include('layouts.navbar')
             @yield('content')
         </main>
         <!-- END Main Container -->

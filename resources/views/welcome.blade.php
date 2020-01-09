@@ -280,15 +280,14 @@
                 <h2 class="h4 font-w400 text-white-op">Join to tutors to impact knowledge and earn while you are at it.
                 </h2>
                 <div class="font-size-md text-muted">
-                    <a href="#" class="btn btn-lg btn-primary min-width-125">Learn More <i
-                            class="fa fa-angle-right font-w300"></i></a>
+                    <a href="{{ route('tutorSignup') }}" class="btn btn-lg btn-primary min-width-125">Join Now</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
+{{--
 <div class="bg-white-op-75 py-30">
     <div class="content text-center">
         <h3 class="font-w700 mb-10">From Our Students</h3>
@@ -296,17 +295,17 @@
             <div class="col-12">
                 <div class="block-content block-content-full bg-white-op-10">
                     <img class="img-avatar img-avatar-thumb" src="\{{ asset('images/bg.jpg') }}" alt="">
-                </div>
-                <span class="ac-testiminial-usr">Okorie Rachel</span>
-                <div class="container mb-10 col-lg-8">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, quibusdam? Est nulla illo
-                    odio incidunt enim laborum error exercitationem, dolor mollitia cupiditate laboriosam amet
-                    dicta, ex pariatur ratione odit dolorem.
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+<span class="ac-testiminial-usr">Okorie Rachel</span>
+<div class="container mb-10 col-lg-8">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, quibusdam? Est nulla illo
+    odio incidunt enim laborum error exercitationem, dolor mollitia cupiditate laboriosam amet
+    dicta, ex pariatur ratione odit dolorem.
+</div>
+</div>
+</div>
+</div>
+</div> --}}
 
 
 @include('layouts.footer')

@@ -10,10 +10,7 @@
               at it.
             </h2>
             <div class="font-size-md text-muted">
-              <a href="#" class="btn btn-lg btn-primary min-width-125">
-                Learn More
-                <i class="fa fa-angle-right font-w300"></i>
-              </a>
+              <a href="/tutor/register" class="btn btn-lg btn-primary min-width-125">Join Now</a>
             </div>
           </div>
         </div>
