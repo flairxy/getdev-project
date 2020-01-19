@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
             }
             return false;
         });
-        Gate::define('tutor', function ($user) {
+        Gate::define('staff', function ($user) {
             if ($user->role == 1) {
                 return true;
             }
@@ -42,6 +42,35 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('student', function ($user) {
             if ($user->role == 0) {
+                return true;
+            }
+            return false;
+        });
+
+
+        Gate::define('dean', function ($user) {
+            if ($user->hasRole('dean')) {
+                return true;
+            }
+            return false;
+        });
+        Gate::define('teacher', function ($user) {
+            if ($user->hasRole('teacher')) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('adminRole', function ($user) {
+            if ($user->hasRole('admin')) {
+                return true;
+            }
+            return false;
+        });
+
+
+        Gate::define('conFin', function ($user) {
+            if ($user->hasRole('contractor') || $user->hasRole('finance')) {
                 return true;
             }
             return false;

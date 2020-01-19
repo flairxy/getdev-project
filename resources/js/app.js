@@ -5,45 +5,23 @@ import App from "./views/App";
 import { routes } from "./router";
 import { Form, HasError, AlertError } from "vform";
 import Vuex from "vuex";
-import store from "./store/Store";
+import { store } from "./store/Store";
 import NProgress from "nprogress";
 import "../../node_modules/nprogress/nprogress.css";
 import VueClipboard from "vue-clipboard2";
-// import AddModal from "./components/AddModal";
 import VueProgressBar from "vue-progressbar";
 import swal from "sweetalert2";
 import vueCountryRegionSelect from "vue-country-region-select";
 import BootstrapVue from "bootstrap-vue";
 
-import CourseCard from "./components/CourseCard";
-import StudentHeader from "./components/StudentHeader";
-import ReviewTop from "./components/ReviewTop";
-import StudentReview from "./components/StudentReview";
-import CourseLessons from "./components/CourseLessons";
-import CourseAims from "./components/CourseAims";
-import Thumbnail from "./components/Thumbnail";
-import TutorAd from "./components/Ad";
-import MessageCounter from "./components/Messages";
-import NewMessage from "./components/Message";
 import VueFormWizard from "vue-form-wizard";
 import "vue-form-wizard/dist/vue-form-wizard.min.css";
-import QrcodeVue from "qrcode.vue";
+import VueLocalStorage from "vue-localstorage";
 
+Vue.use(VueLocalStorage);
 Vue.use(VueFormWizard);
 Vue.use(BootstrapVue);
 Vue.use(vueCountryRegionSelect);
-
-// components
-Vue.component("QrcodeVue", QrcodeVue);
-Vue.component("create-message", NewMessage);
-Vue.component("course-card", CourseCard);
-Vue.component("student-header", StudentHeader);
-Vue.component("review-top", ReviewTop);
-Vue.component("student-review", StudentReview);
-Vue.component("course-lesson", CourseLessons);
-Vue.component("course-aims", CourseAims);
-Vue.component("thumbnail", Thumbnail);
-Vue.component("tutor-ad", TutorAd);
 
 window.swal = swal;
 const toast = swal.mixin({
@@ -66,7 +44,6 @@ Vue.use(VueProgressBar, {
 // Vue.component("add-modal", AddModal);
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
-Vue.component("messages", MessageCounter);
 
 window.Form = Form;
 window.Fire = new Vue();
@@ -93,11 +70,4 @@ const app = new Vue({
     router,
     Fire,
     store
-});
-const stats = new Vue({
-    el: "#stats"
-    // components: { App },
-    // router,
-    // Fire,
-    // store
 });

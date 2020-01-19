@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tutor;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Notification;
+use App\Notifications\Message;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function tutor()
+    public function staff()
     {
         return view('auth.tutor_register');
     }
@@ -21,7 +24,7 @@ class UserController extends Controller
         return view('auth.admin_login');
     }
 
-    public function registerTutor(Request $request)
+    public function registerStaff(Request $request)
     {
 
         Validator::make($request->all(), [
@@ -42,8 +45,8 @@ class UserController extends Controller
 
 
 
-        $tutor = new Tutor();
-        $tutor->user_id = $user->id;
+        $staff = new Staff();
+        $staff->user_id = $user->id;
         // $hasFile = $data['identity'];
 
         // if ($hasFile) {
@@ -52,9 +55,8 @@ class UserController extends Controller
         //     $image->move(public_path() . '/gallery/', $name);
         //     $tutor->identity = $name;
         // }
-        $tutor->tutor_id = 'DA' . uniqid();
-        $tutor->save();
-
-        return redirect('/login')->with('status', 'Registration Successful. Log in to continue');
+        $staff->tutor_id = 'DA' . uniqid();
+        $staff->save();
+        return redirect('/login')->with('status', 'Registration Successful. Account Pending Verification');
     }
 }

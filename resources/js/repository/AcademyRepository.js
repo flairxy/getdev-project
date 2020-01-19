@@ -1,168 +1,116 @@
 import axios from "axios";
 const admin = "/api/admin";
 const student = "/api/student";
-const tutor = "/api/tutor";
+const staff = "/api/staff";
 export default {
     //AUTHENTICATIONS
     loggedInUser() {
         return axios.get(`/api/user`);
     },
-    apiCall(data) {
-        return axios.post(`http://45.77.201.82/api`, data);
+    getClasses() {
+        return axios.get(`${admin}/classes`);
+    },
+    banStudents(data) {
+        return axios.post(`${admin}/students/ban`, data);
+    },
+    banStaffs(data) {
+        return axios.post(`${admin}/staffs/ban`, data);
+    },
+    activateStudents(data) {
+        return axios.post(`${admin}/students/activate`, data);
+    },
+    activateStaffs(data) {
+        return axios.post(`${admin}/staffs/activate`, data);
     },
 
-    // General routes
+    //Admin Staff routes
+    createStaff(data) {
+        return axios.post(`${admin}/staffs`, data);
+    },
+    staffDelete(id) {
+        return axios.delete(`${admin}/staffs/${id}`);
+    },
+    updateStaff(data, id) {
+        return axios.put(`${admin}/staffs/${id}`, data);
+    },
+    getStaffs() {
+        return axios.get(`${admin}/staffs`);
+    },
+    getRoles() {
+        return axios.get(`${admin}/roles`);
+    },
+    getAdminStaffClasses(id) {
+        return axios.get(`${admin}/staff/class/${id}`);
+    },
+    removeStaffFromClass(data) {
+        return axios.post(`${admin}/staff/class`, data);
+    },
 
-    topRatedCourses() {
-        return axios.get(`/api/courses/other-courses`);
+    //Admin Student Routes
+    createStudent(data) {
+        return axios.post(`${admin}/students`, data);
     },
-    totalRevenues() {
-        return axios.get(`${admin}/revenues`);
+    studentDelete(id) {
+        return axios.delete(`${admin}/students/${id}`);
     },
-    totalMixCourses() {
-        return axios.get(`${admin}/mix-courses`);
+    removeStudentFromClass(data) {
+        return axios.post(`${admin}/student/class`, data);
     },
-    totalMixUsers() {
-        return axios.get(`${admin}/mix-users`);
-    },
-    notify(data) {
-        return axios.post(`/api/notify`, data);
-    },
-    adminNotify(data) {
-        return axios.post(`/api/admin/notify`, data);
+    getAdminStudentClasses(id) {
+        return axios.get(`${admin}/student/class/${id}`);
     },
 
-    // Admin Routes
-
-    loadCategories() {
-        return axios.get(`/api/categories`);
-    },
-    loadChapters() {
-        return axios.get(`/api/chapters`);
+    updateStudent(data, id) {
+        return axios.put(`${admin}/students/${id}`, data);
     },
     getStudents() {
         return axios.get(`${admin}/students`);
     },
-    getTutors() {
-        return axios.get(`${admin}/tutors`);
+    createClass(data) {
+        return axios.post(`${admin}/classes`, data);
     },
-    adminSentMessages(id) {
-        return axios.get(`${admin}/${id}/messages/sent`);
+    classDelete(id) {
+        return axios.delete(`${admin}/classes/${id}`);
     },
-    updateCourseStatus(data) {
-        return axios.post(`${admin}/course/update`, data);
-    },
-    adminDeleteCourse(id) {
-        return axios.post(`${admin}/course/${id}/delete`);
+    updateClass(data, id) {
+        return axios.put(`${admin}/classes/${id}`, data);
     },
 
-    //Tutor Routes
-    tutor(id) {
-        return axios.get(`${tutor}/profile/${id}`);
+    // Student Routes
+    student(id) {
+        return axios.get(`${student}/students/${id}`);
     },
-    createCourse(data) {
-        return axios.post(`${tutor}/course/create`, data);
+    studentUpdate(data, id) {
+        return axios.put(`${student}/students/${id}`, data);
     },
-    tutorUpdateCourse(data) {
-        return axios.post(`${tutor}/course/update`, data);
+    getClassByLevel(id) {
+        return axios.get(`${student}/students/${id}/class`);
     },
-    tutorDeleteCourse(id) {
-        return axios.post(`${tutor}/course/${id}/delete`);
+    getStudentClasses(id) {
+        return axios.get(`${student}/students/class/${id}`);
     },
-    tutorDeleteOutline(id) {
-        return axios.post(`${tutor}/course/outline/${id}/delete`);
-    },
-    tutorUploadVideos(data) {
-        return axios.post(`${tutor}/course/video-uploads`, data);
-    },
-    tutorCourses(id) {
-        return axios.get(`${tutor}/${id}/courses`);
-    },
-    tutorCourseOutlines(id) {
-        return axios.get(`${tutor}/course/${id}`);
-    },
-    getOutlinesByChapter(course_id, chapter) {
-        return axios.get(`${tutor}/course/${course_id}/${chapter}`);
+    enrollStudentClass(data) {
+        return axios.post(`${student}/students/enroll`, data);
     },
 
-    getCourseById(id) {
-        return axios.get(`${tutor}/course/${id}/edit`);
+    //Staff Routes
+    getRole(id) {
+        return axios.get(`${staff}/${id}/role`);
     },
-    getVideosByOutlines(data) {
-        return axios.post(`${tutor}/course/videos`, data);
-    },
-    tutorMessages(id) {
-        return axios.get(`${tutor}/${id}/messages`);
-    },
-    tutorSentMessages(id) {
-        return axios.get(`${tutor}/${id}/messages/sent`);
-    },
-    updateMessage(data) {
-        return axios.post(`${tutor}/message/update`, data);
-    },
-    updateMessages(data) {
-        return axios.post(`${tutor}/messages`, data);
-    },
-    deleteTutorMessages(data) {
-        console.log(data);
-        return axios.post(`${tutor}/messages/delete`, data);
-    },
-    tutorUpdateProfile(data, id) {
-        return axios.post(`${tutor}/profile/${id}/update`, data);
-    },
-    tutorPasswordUpdate(data) {
-        return axios.post(`${tutor}/profile/update-password`, data);
+    staff(id) {
+        return axios.get(`${staff}/staffs/${id}`);
     },
 
-    tutorVerifyEmail(data) {
-        return axios.post(`${tutor}/profile/verify-email`, data);
+    staffUpdate(data, id) {
+        return axios.put(`${staff}/staffs/${id}`, data);
     },
-    getAccountSummary(id) {
-        return axios.get(`${tutor}/${id}/summary`);
+    enrollStaffClass(data) {
+        return axios.post(`${staff}/staffs/enroll`, data);
     },
-    getWithdrawals(id) {
-        return axios.get(`${tutor}/${id}/withdrawals`);
+    getStaffClasses(id) {
+        return axios.get(`${staff}/staffs/class/${id}`);
     },
-    withdraw(data) {
-        return axios.post(`${tutor}/funds/withdraw`, data);
-    },
-
-    //Student routes
-    studentCourses(id) {
-        return axios.get(`${student}/${id}/courses`);
-    },
-    studentCourse(id) {
-        return axios.get(`${student}/course/${id}`);
-    },
-    reviewCourse(data) {
-        return axios.post(`${student}/course/review`, data);
-    },
-    getCourseReview(course, user) {
-        return axios.get(`${student}/course/${course}/${user}/review`);
-    },
-    getCourseReviews(id) {
-        return axios.get(`${student}/course/${id}/reviews`);
-    },
-    enroll(data) {
-        return axios.post(`${student}/course/enroll`, data);
-    },
-    buyCourse(data) {
-        return axios.post(`${student}/course/buy`, data);
-    },
-    checkSubscribers(id) {
-        return axios.get(`${student}/subscribers/${id}`);
-    },
-    studentUpdateProfile(data, id) {
-        return axios.post(`${student}/profile/${id}/update`, data);
-    },
-    studentPasswordUpdate(data) {
-        return axios.post(`${student}/profile/update-password`, data);
-    },
-
-    studentVerifyEmail(data) {
-        return axios.post(`${student}/profile/verify-email`, data);
-    },
-    studentNotifications(id) {
-        return axios.post(`${student}/profile/${id}/notifications`);
+    getTeacherStudents(id) {
+        return axios.get(`${staff}/staffs/${id}/students`);
     }
 };

@@ -525,8 +525,8 @@ eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/bitfxt/academy/resources/assets/js/laravel/app.js */"./resources/assets/js/laravel/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/bitfxt/academy/resources/assets/sass/_scss/main.scss */"./resources/assets/sass/_scss/main.scss");
+__webpack_require__(/*! /var/www/html/hustle/getDev/resources/assets/js/laravel/app.js */"./resources/assets/js/laravel/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/hustle/getDev/resources/assets/sass/_scss/main.scss */"./resources/assets/sass/_scss/main.scss");
 
 
 /***/ })

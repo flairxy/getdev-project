@@ -343,6 +343,7 @@
         display: inline-block !important;
         width: 71px;
         height: 64px;
+        padding-top: 20px;
     }
 
     .dragx {
@@ -361,6 +362,15 @@
     .ac-py-27 {
         padding-top: 0 !important;
     }
+
+}
+
+@media(min-width: 768px) and (max-width: 768px) {
+
+    .nm {
+        margin-left: 0 !important;
+    }
+
 }
 
 @media (min-width: 768px) and (max-width: 1025px) {
@@ -376,10 +386,6 @@
 
     }
 
-    .nm {
-        margin-left: 0 !important;
-    }
-
     .tn {
         margin-top: 0 !important;
     }
@@ -392,6 +398,10 @@
     height: 180px; */
         width: 400px !important;
         height: 250px !important;
+    }
+
+    .nm {
+        margin-left: 50px !important;
     }
 
     .xfont {

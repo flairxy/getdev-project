@@ -3,7 +3,7 @@
     <div class="bg-white-op-90">
       <div class="content">
         <div class="mt-15">
-          <h5 class="font-s22 font-w900 text-muted">Welcome, Admin</h5>
+          <h5 class="font-s22 font-w900 text-muted">Welcome</h5>
           <hr />
         </div>
         <div>
@@ -19,34 +19,24 @@
             <div class="col-md-6 col-xl-3">
               <a class="block block-link-shadow ac-bg-danger-lighter" href="javascript:void(0)">
                 <div class="block-content block-content-full">
-                  <div class="h1 font-w700">{{ totalTutors }}</div>
-                  <div class="font-size-sm font-w600 text-uppercase">Tutors</div>
+                  <div class="h1 font-w700">{{ totalTeachers }}</div>
+                  <div class="font-size-sm font-w600 text-uppercase">Teachers</div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <a class="block block-link-shadow ac-bg-danger-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full">
+                  <div class="h1 font-w700">{{ totalStaffs }}</div>
+                  <div class="font-size-sm font-w600 text-uppercase">Staffs</div>
                 </div>
               </a>
             </div>
             <div class="col-md-6 col-xl-3">
               <a class="block block-link-shadow bg-earth-lighter" href="javascript:void(0)">
                 <div class="block-content block-content-full">
-                  <div class="h1 font-w700">{{ approvedCourses }}</div>
-                  <div class="font-size-sm font-w600 text-uppercase">Approved Courses</div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-md-6 col-xl-3">
-              <a class="block block-link-shadow bg-warning-light" href="javascript:void(0)">
-                <div class="block-content block-content-full">
-                  <div class="h1 font-w700">${{ revenues }}</div>
-                  <div class="font-size-sm font-w600 text-uppercase">Revenue</div>
-                </div>
-              </a>
-            </div>
-
-            <div class="col-md-6 col-xl-3">
-              <a class="block block-link-shadow bg-warning-light" href="javascript:void(0)">
-                <div class="block-content block-content-full">
-                  <div class="h1 font-w700">{{ pendingCourses }}</div>
-                  <div class="font-size-sm font-w600 text-uppercase">Pending Courses</div>
+                  <div class="h1 font-w700">{{ totalClasses }}</div>
+                  <div class="font-size-sm font-w600 text-uppercase">Classes</div>
                 </div>
               </a>
             </div>
@@ -62,30 +52,41 @@ const AR = Repo.get("academy");
 export default {
   data() {
     return {
-      revenues: "",
-      pendingCourses: "",
-      approvedCourses: "",
-      totalTutors: "",
-      totalStudents: ""
+      classes: [],
+      staffs: [],
+      students: []
     };
   },
-  methods: {
-    getInfos() {
-      AR.totalRevenues().then(res => {
-        this.revenues = res.data.revenues;
+  computed: {
+    totalClasses() {
+      return this.classes.length;
+    },
+    totalStaffs() {
+      return this.staffs.length;
+    },
+    totalStudents() {
+      return this.students.length;
+    },
+    totalTeachers() {
+      let x = [];
+      this.staffs.map(staff => {
+        if (staff.role[0].slug == "teacher") {
+          x.push(staff);
+        }
       });
-      AR.totalMixCourses().then(res => {
-        (this.pendingCourses = res.data.total_pending),
-          (this.approvedCourses = res.data.total_approved);
-      });
-      AR.totalMixUsers().then(res => {
-        (this.totalTutors = res.data.total_tutors),
-          (this.totalStudents = res.data.total_students);
-      });
+      return x.length;
     }
   },
   created() {
-    this.getInfos();
+    AR.getClasses().then(res => {
+      this.classes = res.data;
+    });
+    AR.getStaffs().then(res => {
+      this.staffs = res.data;
+    });
+    AR.getStudents().then(res => {
+      this.students = res.data;
+    });
   }
 };
 </script>

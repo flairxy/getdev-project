@@ -4,11 +4,12 @@
   </div>
 </template>
 <script>
+import { RepositoryFactory as Repo } from "../repository/RepositoryFactory";
+const AR = Repo.get("academy");
 export default {
   mounted() {
-    this.$store.dispatch("storeCurrency", {
-      //   currency: "₦"
-      currency: "$"
+    AR.loggedInUser().then(res => {
+      this.$localStorage.set("user", JSON.stringify(res.data));
     });
   }
 };

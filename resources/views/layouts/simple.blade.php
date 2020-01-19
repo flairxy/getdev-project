@@ -5,10 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>D'academi</title>
+    <title>Assessment</title>
 
-    <meta name="description"
-        content="Codebase - Bootstrap 4 Admin Template &amp; UI Framework created by pixelcave and published on Themeforest">
+    <meta name="description" content="Academy | Assessment">
     <meta name="author" content="pixelcave">
     <meta name="robots" content="noindex, nofollow">
 

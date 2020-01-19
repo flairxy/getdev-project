@@ -1,152 +1,138 @@
 <template>
-  <div>
-    <div class="bg-white-op-90 py-30">
-      <div class="content">
-        <div class="row">
-          <div class="col-lg-6 col-md-12 py-20">
-            <h4 class="font-s22 font-w900 mb-5">Start and finish a course anywhere from any device</h4>
-            <p
-              class="font-s16 text-primary-light"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit.Dolore porro aliquam soluta aolore porro aliquam soluta enim.</p>
-            <!-- <div class="container row">
-              <span class="mr-2">
-                <a href class="btn btn-primary">Explore Categories</a>
-              </span>
-              <span>
-                <a href class="btn btn-outline-primary">Recomendations</a>
-              </span>
-            </div>-->
-          </div>
-          <div class="col-lg-6 col-md-12 text-center">
-            <img style="width: 100%" :src="image1" alt />
-          </div>
-        </div>
-        <div class="mt-15">
-          <h5 class="font-s16 font-w900 text-muted">Hello {{ user.name }}</h5>
-          <hr />
-        </div>
-        <!-- <div>
-          <p class="font-s16 font-w300 text-dark">Your stats this month</p>
-          <div class="row">
-            <div class="col-md-6 col-xl-4">
-              <a class="block block-link-shadow bg-gray-light" href="javascript:void(0)">
-                <div class="block-content block-content-full">
-                  <div class="h1 font-w700">5</div>
-                  <div class="font-size-sm font-w600 text-uppercase">Courses Studying</div>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-6 col-xl-4">
-              <a class="block block-link-shadow ac-bg-danger-lighter" href="javascript:void(0)">
-                <div class="block-content block-content-full">
-                  <div class="h1 font-w700">12</div>
-                  <div class="font-size-sm font-w600 text-uppercase">Study Hours</div>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-6 col-xl-4">
-              <a class="block block-link-shadow bg-earth-lighter" href="javascript:void(0)">
-                <div class="block-content block-content-full">
-                  <div class="h1 font-w700">35%</div>
-                  <div class="font-size-sm font-w600 text-uppercase">Course Completion</div>
-                </div>
-              </a>
+  <div class="block-content bg-white-op-90 col-lg-8">
+    <form action method="post" @submit.prevent="updateProfile(user.id)">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class>
+              <label for="username">Student ID</label>
+              <input type="text" class="form-control" :value="user.username" disabled id="username" />
             </div>
           </div>
-        </div>-->
-        <div v-if="courses.length > 0">
-          <p class="font-s16 font-w300 text-dark pl-15">Pick up from where you left off...</p>
-          <div class="ac-card">
-            <div v-for="course in courses" :key="course.id" class="ac-card--content col-6 col-lg-3">
-              <course-card
-                :courseAmount="course.amount"
-                :courseAuthor="course.tutor"
-                :courseTitle="course.title.slice(0,30) + '...'"
-                :courseStudentNumber="course.total_student"
-                :bgImage="course.cover_image"
-                :courseRating="course.rating"
-                :courseTotalLesson="course.total_outlines"
-                :myCourse="true"
-                @myClick="playCourse(course.id, course.slug)"
+          <div class="form-group">
+            <div class>
+              <label for="name">Name</label>
+              <input type="text" class="form-control" :value="user.name" disabled id="name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class>
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                :value="user.email"
+                id="email"
+                disabled
+                name="material-text"
               />
             </div>
           </div>
         </div>
-        <div v-else>
-          <span class="text-muted h6">You have no course</span>
-        </div>
-      </div>
-    </div>
-    <div class="py-30">
-      <div class="content">
-        <p class="font-s16 font-w300 text-dark pl-15">Other Courses</p>
-        <div class="ac-card">
-          <div v-for="course in topRated" :key="course.id" class="ac-card--content col-6 col-lg-3">
-            <course-card
-              :courseAmount="course.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :courseAuthor="course.tutor"
-              :courseTitle="course.title.slice(0,30) + '...'"
-              :courseStudentNumber="course.total_student.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-              :bgImage="course.cover_image"
-              :courseRating="course.rating"
-              :courseTotalLesson="course.total_outlines"
-              :myCourse="false"
-              :premium="course.type"
-              @myClick="previewCourse(course.id, course.slug)"
-            />
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class>
+              <label for="username">Country</label>
+              <country-select
+                v-model="form.country"
+                :country="form.country"
+                topCountry="US"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class>
+              <label for="username">State</label>
+              <region-select
+                class="form-control"
+                v-model="form.state"
+                :country="form.country"
+                :region="form.state"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class>
+              <label for="phone">Phone</label>
+              <input type="text" class="form-control" v-model="form.phone" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class>
+              <label for="username">Address</label>
+              <input type="text" class="form-control" v-model="form.address" />
+            </div>
+          </div>
+
+          <div>
+            <div v-if="processing" class="col-6 col-md-3">
+              <i class="fa fa-2x fa-cog fa-spin text-primary"></i>
+            </div>
+            <button type="submit" class="btn btn-md btn-primary mb-10">Update Profile</button>
           </div>
         </div>
       </div>
-    </div>
-    <tutor-ad />
+    </form>
   </div>
 </template>
 
 <script>
-import { RepositoryFactory as Repo } from "../../repository/RepositoryFactory";
+import { RepositoryFactory } from "../../repository/RepositoryFactory";
+import axios from "axios";
 
-const AR = Repo.get("academy");
+const AR = RepositoryFactory.get("academy");
 export default {
   data() {
     return {
       user: {},
-      image1: "/images/luser1.webp",
-      topRated: [],
-      courses: []
+      processing: false,
+      form: new Form({
+        country: "",
+        state: "",
+        address: "",
+        phone: "",
+        id: ""
+      })
     };
   },
   methods: {
-    previewCourse(id, slug) {
-      this.$router.push({
-        name: "StudentCoursePreview",
-        params: { id: id, slug: slug }
-      });
-    },
-    playCourse(id, slug) {
-      this.$router.push({
-        name: "StudentVideoCourse",
-        params: { id: id, slug: slug }
-      });
-    },
-    getTopRatedCourses() {
-      AR.topRatedCourses().then(res => {
-        this.topRated = res.data;
-      });
-    },
-    getStudentCourses() {
-      AR.loggedInUser().then(res => {
-        this.user = res.data;
-        let user = res.data.id;
-        AR.studentCourses(user).then(response => {
-          this.courses = response.data.courses;
+    updateProfile(id) {
+      this.processing = true;
+      AR.studentUpdate(this.form, id)
+        .then(response => {
+          this.processing = false;
+          toast.fire({
+            type: "success",
+            title: "Profile updated successfully"
+          });
+        })
+        .catch(() => {
+          this.processing = false;
+          toast({
+            type: "warning",
+            title: "Failed to update profile"
+          });
         });
-        AR.studentNotifications(user).then(res => {});
-      });
     }
   },
   created() {
-    this.getTopRatedCourses();
-    this.getStudentCourses();
+    AR.loggedInUser().then(response => {
+      let user = response.data;
+      this.$localStorage.set("user", JSON.stringify(user));
+      this.user = user;
+      AR.student(user.id).then(res => {
+        this.form.country = res.data.country;
+        this.form.state = res.data.state;
+        this.form.address = res.data.address;
+        this.form.phone = res.data.phone;
+      });
+    });
   }
 };
 </script>
+
+<style scoped>
+</style>

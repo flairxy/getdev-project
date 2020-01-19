@@ -47,6 +47,7 @@
         "vue-cookies": "^1.5.13",
         "vue-country-region-select": "^2.0.11",
         "vue-form-wizard": "^0.8.4",
+        "vue-localstorage": "^0.6.2",
         "vue-nprogress": "^0.1.5",
         "vue-progressbar": "^0.7.5",
         "vue-router": "^3.1.3",

@@ -16,9 +16,9 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('user_id');
-            $table->string('image')->nullable();
+            $table->string('student_id');
+            $table->string('level');
             $table->string('phone')->nullable();
-            $table->string('zip')->nullable();
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('address')->nullable();

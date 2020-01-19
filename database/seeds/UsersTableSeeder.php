@@ -11,10 +11,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $role = \App\Models\Role::where('slug', 'super-admin')->first();
+        $role = \App\Models\Role::where('slug', 'dean')->first();
         $user = new \App\Models\User();
-        $user->username = 'super-admin';
-        $user->name = 'super-admin';
+        $user->username = 'dean';
+        $user->name = 'Dean A';
         $user->email = 'superadmin@localhost';
         $user->role = 2;
         $user->password = bcrypt('secret');

@@ -36,19 +36,19 @@ class LoginController extends Controller
         $user = Auth::user();
 
         if ($user->role == '0' && $user->ban == '0') {
-            $this->redirectTo = '/_ds/dashboard';
+            $this->redirectTo = '/_student/dashboard';
             return $this->redirectTo;
         }
 
         if ($user->role == '1' && $user->ban == '0') {
 
-            $this->redirectTo = '/_dt/dashboard';
+            $this->redirectTo = '/_staff/dashboard';
             return $this->redirectTo;
         }
 
         if ($user->role == '2' && $user->ban == '0') {
             session()->flash('success', 'Login Successful');
-            $this->redirectTo = '/_dmgt/dashboard';
+            $this->redirectTo = '/_management/dashboard';
             return $this->redirectTo;
         }
     }

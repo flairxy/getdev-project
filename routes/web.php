@@ -11,9 +11,14 @@
 |
 */
 
+use App\Models\Category;
+use App\Models\Course;
 use App\Models\Plan;
+use App\Models\Tutor;
+use App\Models\User;
 
 Route::get('/', function () {
+
     return view('welcome');
 });
 
@@ -21,27 +26,22 @@ Route::get('/home', function () {
     return view('home');
 });
 
-Route::get('/subscribe', function () {
-    $plans = Plan::all();
-    return view('checkoutPage', ['plans' => $plans]);
-})->middleware('auth');
-Route::post('subscribe', 'API\Student\CourseController@subscribe')->name('subscribe');
 
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/tutor/register', 'UserController@tutor')->name('tutorSignup');
-Route::post('register-tutor', 'UserController@registerTutor')->name('tutorRegistration');
+Route::get('/staff/register', 'UserController@staff')->name('staffSignup');
+Route::post('register-staff', 'UserController@registerStaff')->name('staffRegistration');
 
 // 'middleware' => ['auth', 'admin', 'ban']
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('_dmgt/{any}', 'ManagementController@index')->where('any', '.*');
+    Route::get('_management/{any}', 'ManagementController@index')->where('any', '.*');
 });
 
 Route::group(['middleware' => ['auth', 'student']], function () {
-    Route::get('_ds/{any}', 'StudentController@index')->where('any', '.*');
+    Route::get('_student/{any}', 'StudentController@index')->where('any', '.*');
 });
 
-Route::group(['middleware' => ['auth', 'tutor']], function () {
-    Route::get('_dt/{any}', 'TutorController@index')->where('any', '.*');
+Route::group(['middleware' => ['auth', 'staff']], function () {
+    Route::get('_staff/{any}', 'StaffController@index')->where('any', '.*');
 });

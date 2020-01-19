@@ -24,9 +24,9 @@ class Student
             }
             if (Auth::user()->role == '1') {
 
-                return redirect('/_dt/dashboard');
+                return redirect('/_staff/dashboard');
             }
-            return redirect('/_dmgt/dashboard');
+            return redirect('/_management/dashboard');
         }
         return redirect()->route('login');
     }

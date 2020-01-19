@@ -4,6 +4,7 @@ namespace App\Console;
 
 // use App\Console\Commands\UpdateCourseStudents;
 
+use App\Console\Commands\IncompleteTransactions;
 use App\Console\Commands\UpdateSubscriptions;
 use App\Console\Commands\UpdateCourseStudents;
 use Illuminate\Console\Scheduling\Schedule;
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         UpdateCourseStudents::class,
-        UpdateSubscriptions::class
+        UpdateSubscriptions::class,
+        IncompleteTransactions::class,
     ];
 
     /**
@@ -33,6 +35,8 @@ class Kernel extends ConsoleKernel
             ->hourly();
         $schedule->command('subscription:update')
             ->hourly();
+        $schedule->command('clear: iTransactions')
+            ->daily();
     }
 
     /**

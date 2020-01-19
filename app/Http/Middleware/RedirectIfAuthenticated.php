@@ -22,15 +22,15 @@ class RedirectIfAuthenticated
             $user = Auth::user();
 
             if ($user->role == '0' && $user->ban == '0') {
-                return redirect('/_ds/dashboard');
+                return redirect('/_student/dashboard');
             } else
 
             if ($user->role == '1' && $user->ban == '0') {
-                return redirect('/_dt/dashboard');
+                return redirect('/_staff/dashboard');
             } else
 
             if ($user->role == '2' && $user->ban == '0') {
-                return redirect('/_dmgt/dashboard');;
+                return redirect('/_management/dashboard');;
             }
         }
 

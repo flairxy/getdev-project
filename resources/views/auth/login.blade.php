@@ -10,10 +10,9 @@
                 <div class="py-30 text-center">
                     <a class="link-effect font-w700" href="/">
                         <i class="si si-book-open"></i>
-                        <span class="font-size-xl text-primary-dark">D'</span><span class="font-size-xl">academi</span>
+                        <span class="font-size-xl text-primary-dark">Get</span><span class="font-size-xl">Dev</span>
                     </a>
                     <h1 class="h4 font-w700 mt-30 mb-10">Welcome to Your Dashboard</h1>
-                    <h2 class="h5 font-w400 text-muted mb-0">It’s a great day today!</h2>
                 </div>
 
                 <div class="">
@@ -86,14 +85,11 @@
                         </div>
                         <div class="block-content bg-body-light">
                             <div class="form-group text-center">
-                                <a class="link-effect text-muted mr-10 mb-5 d-inline-block"
-                                    href="{{ route('register') }}">
-                                    <i class="fa fa-plus mr-5"></i> Create Account
-                                </a>
-                                <a class="link-effect text-muted mr-10 mb-5 d-inline-block"
+
+                                {{-- <a class="link-effect text-muted mr-10 mb-5 d-inline-block"
                                     href="{{ route('password.request') }}">
-                                    <i class="fa fa-warning mr-5"></i> Forgot Password
-                                </a>
+                                <i class="fa fa-warning mr-5"></i> Forgot Password
+                                </a> --}}
                             </div>
                         </div>
                     </div>

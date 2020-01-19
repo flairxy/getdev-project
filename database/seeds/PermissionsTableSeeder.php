@@ -13,31 +13,27 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+
+
         $permissions = [
-            'send-emails',
-            'view-emails',
+            'add-classes',
+            'add-students',
+            'hire-staff',
             'view-records',
-            'pay-out',
-            'view-payments',
+            'students-in-class',
+            'staff-in-school',
+            'student-in-school',
+            'enroll-in-school',
+            'enroll-in-classes',
+            'view'
 
-            'create-user',
-            'create-plan',
-
-            'edit-user',
-            'edit-plan',
-
-            'update-plan',
-            'update-user',
-
-            'delete-plan',
-            'delete-user',
         ];
 
         foreach ($permissions as $permission) {
             $word = explode('-', $permission);
             \App\Models\Permission::firstOrCreate([
                 'slug' => $permission,
-                'description' => implode('s ', $word)
+                'description' => implode($word)
             ]);
         }
     }
